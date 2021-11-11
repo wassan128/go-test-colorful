@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+awk -v bg_red=$(tput setab 1) \
+    -v bg_green=$(tput setab 2) \
+    -v bg_blue=$(tput setab 4) \
+    -v yellow=$(tput setaf 3) \
+    -v eoc=$(tput sgr 0) \
+'{
+    gsub(/FAIL/, bg_red " FAIL " eoc)
+    gsub(/PASS/, bg_green " PASS " eoc)
+    gsub(/RUN/, bg_blue " RUN " eoc)
+
+    gsub(/^ok/, bg_green " ok " eoc)
+    gsub(/.*\[no test files\]/, yellow $0 eoc)
+
+    print
+}'
+
